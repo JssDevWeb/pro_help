@@ -8,25 +8,32 @@ use Illuminate\Support\Facades\DB;
 class InterventionSeeder extends Seeder
 {
     public function run(): void
-    {
-        $interventions = [
+    {        $interventions = [
             [
                 'beneficiary_id' => 1, // Juan Pérez
                 'service_id' => 1, // Comedor Social Madrid Centro
-                'status' => 'active',
-                'start_date' => '2024-05-22',
-                'end_date' => '2024-06-22',
+                'user_id' => 1, // Suponemos que existe un usuario con ID 1
+                'status' => 'scheduled',
+                'scheduled_date' => '2024-05-22 10:00:00',
+                'started_date' => null,
+                'completed_date' => null,
                 'notes' => 'Necesita apoyo alimentario diario',
-                'type' => 'food_assistance',
+                'outcome' => null,
+                'follow_up' => 'Seguimiento semanal',
+                'follow_up_date' => '2024-06-01 10:00:00',
             ],
             [
                 'beneficiary_id' => 2, // María García
                 'service_id' => 2, // Albergue Barcelona
-                'status' => 'pending',
-                'start_date' => '2024-05-23',
-                'end_date' => '2024-06-23',
+                'user_id' => 1, // Mismo usuario
+                'status' => 'in_progress',
+                'scheduled_date' => '2024-05-23 14:00:00',
+                'started_date' => '2024-05-23 14:30:00',
+                'completed_date' => null,
                 'notes' => 'Solicitud de alojamiento temporal',
-                'type' => 'temporary_shelter',
+                'outcome' => null,
+                'follow_up' => 'Revisar situación en una semana',
+                'follow_up_date' => '2024-05-30 14:00:00',
             ],
         ];
 
@@ -34,11 +41,15 @@ class InterventionSeeder extends Seeder
             DB::table('interventions')->insert([
                 'beneficiary_id' => $intervention['beneficiary_id'],
                 'service_id' => $intervention['service_id'],
+                'user_id' => $intervention['user_id'],
                 'status' => $intervention['status'],
-                'start_date' => $intervention['start_date'],
-                'end_date' => $intervention['end_date'],
+                'scheduled_date' => $intervention['scheduled_date'],
+                'started_date' => $intervention['started_date'],
+                'completed_date' => $intervention['completed_date'],
                 'notes' => $intervention['notes'],
-                'type' => $intervention['type'],
+                'outcome' => $intervention['outcome'],
+                'follow_up' => $intervention['follow_up'],
+                'follow_up_date' => $intervention['follow_up_date'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

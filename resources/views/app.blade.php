@@ -1,28 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
+        {{-- Forzar tema claro por defecto para mejor apariencia --}}
         <script>
             (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
-
-                if (appearance === 'system') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-                    if (prefersDark) {
-                        document.documentElement.classList.add('dark');
-                    }
+                const appearance = '{{ $appearance ?? "light" }}';
+                
+                // Solo aplicar tema oscuro si está explícitamente configurado
+                if (appearance === 'dark') {
+                    document.documentElement.classList.add('dark');
                 }
             })();
         </script>
 
-        {{-- Inline style to set the HTML background color based on our theme in app.css --}}
+        {{-- Estilo para fondo claro y limpio --}}
         <style>
             html {
-                background-color: oklch(1 0 0);
+                background-color: #fafafa;
             }
 
             html.dark {

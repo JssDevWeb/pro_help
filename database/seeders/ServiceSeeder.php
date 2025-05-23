@@ -48,17 +48,18 @@ class ServiceSeeder extends Seeder
                 ]),
                 'is_active' => true,
             ],
-        ];
-
-        foreach ($services as $service) {
+        ];        foreach ($services as $service) {
             $mainFields = [
                 'name' => $service['name'],
                 'description' => $service['description'],
                 'type' => $service['type'],
                 'capacity' => $service['capacity'],
                 'address' => $service['address'],
+                'latitude' => $service['latitude'],
+                'longitude' => $service['longitude'],
                 'organization_id' => $service['organization_id'],
-                'schedule' => $service['schedule'],
+                'availability' => $service['schedule'] ?? null, // Usando availability en lugar de schedule
+                'requirements' => null,
                 'is_active' => $service['is_active'],
                 'created_at' => now(),
                 'updated_at' => now(),

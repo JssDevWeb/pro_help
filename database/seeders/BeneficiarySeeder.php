@@ -8,62 +8,64 @@ use Illuminate\Support\Facades\DB;
 class BeneficiarySeeder extends Seeder
 {
     public function run(): void
-    {
-        $beneficiaries = [
+    {        $beneficiaries = [
             [
                 'name' => 'Juan Pérez',
                 'identification' => 'A1234567B',
-                'birth_date' => '1985-06-15',
+                'birthdate' => '1985-06-15',
                 'gender' => 'male',
+                'nationality' => 'Española',
+                'spoken_languages' => json_encode(['español', 'inglés']),
+                'health_status' => 'Buena salud general',
+                'needs' => json_encode(['food', 'shelter']),
                 'phone' => '+34600123456',
                 'email' => 'juan.perez@mail.com',
-                'address' => 'Calle Mayor 15, Madrid',
-                'latitude' => 40.4165,
-                'longitude' => -3.7026,
-                'needs' => json_encode(['food', 'shelter']),
-                'status' => 'active',
+                'contact_preference' => 'phone',
+                'vulnerability_status' => 'medium',
+                'notes' => 'Necesita ayuda con alojamiento temporal',
+                'is_active' => true,
             ],
             [
                 'name' => 'María García',
                 'identification' => 'X8765432Y',
-                'birth_date' => '1990-03-21',
+                'birthdate' => '1990-03-21',
                 'gender' => 'female',
+                'nationality' => 'Colombiana',
+                'spoken_languages' => json_encode(['español']),
+                'health_status' => 'Requiere medicación regular',
+                'needs' => json_encode(['medical', 'job_training']),
                 'phone' => '+34600789012',
                 'email' => 'maria.garcia@mail.com',
-                'address' => 'Carrer de Sants 45, Barcelona',
-                'latitude' => 41.3879,
-                'longitude' => 2.1699,
-                'needs' => json_encode(['medical', 'job_training']),
-                'status' => 'active',
+                'contact_preference' => 'email',
+                'vulnerability_status' => 'high',
+                'notes' => 'Busca formación laboral y asistencia médica',
+                'is_active' => true,
             ],
-        ];
-
-        foreach ($beneficiaries as $beneficiary) {
+        ];        foreach ($beneficiaries as $beneficiary) {
             $mainFields = [
                 'name' => $beneficiary['name'],
                 'identification' => $beneficiary['identification'],
-                'birth_date' => $beneficiary['birth_date'],
+                'birthdate' => $beneficiary['birthdate'],
                 'gender' => $beneficiary['gender'],
+                'nationality' => $beneficiary['nationality'],
+                'spoken_languages' => $beneficiary['spoken_languages'],
+                'health_status' => $beneficiary['health_status'],
+                'needs' => $beneficiary['needs'],
                 'phone' => $beneficiary['phone'],
                 'email' => $beneficiary['email'],
-                'address' => $beneficiary['address'],
-                'needs' => $beneficiary['needs'],
-                'status' => $beneficiary['status'],
+                'contact_preference' => $beneficiary['contact_preference'],
+                'vulnerability_status' => $beneficiary['vulnerability_status'],
+                'notes' => $beneficiary['notes'],
+                'is_active' => $beneficiary['is_active'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
 
-            // Insertar primero los campos principales
-            $beneficiaryId = DB::table('beneficiaries')->insertGetId($mainFields);            // Luego actualizar la columna de ubicación
-            DB::statement("
-                UPDATE beneficiaries 
-                SET last_known_location = ST_SetSRID(ST_MakePoint(?, ?), 4326)
-                WHERE id = ?
-            ", [
-                $beneficiary['longitude'],
-                $beneficiary['latitude'],
-                $beneficiaryId
-            ]);
+            // Insertar los campos principales
+            $beneficiaryId = DB::table('beneficiaries')->insertGetId($mainFields);
+            
+            // No hay columna last_known_location en la tabla beneficiaries según la migración
+            // por lo que eliminamos la parte de actualización de ubicación
         }
     }
 }

@@ -29,16 +29,13 @@ class OrganizationSeeder extends Seeder
                 'latitude' => 41.3851,
                 'longitude' => 2.1734,
             ],
-        ];
-
-        foreach ($organizations as $org) {
-            DB::statement("
+        ];        foreach ($organizations as $org) {            DB::statement("
                 INSERT INTO organizations (
                     name, description, email, phone, address, 
-                    location, created_at, updated_at
+                    latitude, longitude, location, created_at, updated_at
                 ) VALUES (
                     ?, ?, ?, ?, ?,
-                    ST_SetSRID(ST_MakePoint(?, ?), 4326),
+                    ?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326),
                     NOW(), NOW()
                 )
             ", [
@@ -47,8 +44,10 @@ class OrganizationSeeder extends Seeder
                 $org['email'],
                 $org['phone'],
                 $org['address'],
-                $org['longitude'],
                 $org['latitude'],
+                $org['longitude'],
+                $org['longitude'],  // Longitud primero para Point(X, Y)
+                $org['latitude'],   // Latitud después
             ]);
         }
     }

@@ -24,6 +24,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            
+            // Añadimos la clave foránea directamente aquí
+            // Pero la añadimos después de crear la tabla organizations en otra migración
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

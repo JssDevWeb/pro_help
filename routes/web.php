@@ -11,6 +11,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('geoview', function () {
+        return Inertia::render('GeoView');
+    })->name('geoview');
 });
 
 require __DIR__.'/settings.php';
