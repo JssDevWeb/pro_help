@@ -1,0 +1,26 @@
+# Scripts de Prueba ShelterConnect
+
+Este directorio contiene scripts organizados para probar y mantener el proyecto ShelterConnect.
+
+## Archivos Importantes
+
+- `test_completo.ps1` - Prueba completa de la API (versión corregida)
+- `simple_test.ps1` - Pruebas simplificadas para verificación rápida
+- `reset_migrations.bat` - Reinicio de migraciones para desarrollo
+
+## Cómo usar los scripts
+
+Ejecuta estos scripts desde la carpeta raíz del proyecto:
+
+```powershell
+# Pruebas completas
+powershell -ExecutionPolicy Bypass -File .\scripts\test_completo.ps1
+
+# Pruebas simplificadas
+powershell -ExecutionPolicy Bypass -File .\scripts\simple_test.ps1
+
+# Reiniciar migraciones
+.\scripts\reset_migrations.bat
+```
+
+## Última actualización: 23/05/2025

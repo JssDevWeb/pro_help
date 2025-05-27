@@ -1,0 +1,8 @@
+{
+  "name": "react-fix-script",
+  "version": "1.0.0",
+  "description": "Script para corregir problemas de dependencias",
+  "scripts": {
+    "postinstall": "node ./scripts/fix-react-types.js"
+  }
+}
